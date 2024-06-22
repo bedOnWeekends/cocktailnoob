@@ -1,0 +1,19 @@
+{
+  "name": "cocktailnoob",
+  "version": "1.0.0",
+  "main": "CocktailnoobApplication.java",
+  "scripts": {
+    "build:css": "tailwindcss build src/main/resources/static/css/styles.css -o src/main/resources/static/css/output.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "tailwindcss": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest"
+  }
+}
+

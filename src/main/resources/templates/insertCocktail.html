@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/insertCocktail" method="post">
+    <label>이름:
+        <input type="text" name="name">
+    </label>
+    <br>
+    <label>맛:
+        <select name="taste">
+            <option value="sour">상큼</option>
+            <option value="sweet">달콤</option>
+            <option value="bitter">씁쓸</option>
+            <option value="">씁쓸</option>
+        </select>
+    </label>
+    <br>
+    <label>도수:
+        <input type="number" name="alcohol">
+    </label>
+    <br>
+    <label>재료:
+        <input type="text" name="ingredients">
+    </label>
+    <br>
+    <label>잔:
+        <select name="glass">
+            <option value="longDrink">롱드링크</option>
+            <option value="shortDrink">숏드링크</option>
+            <option value="shot">샷</option>
+            <option value="others">그 이외</option>
+        </select>
+    </label>
+    <br>
+    <label>단계:
+        <input type="text" name="steps">
+    </label>
+    <br>
+    <label>이미지 url:
+        <input type="url" name="image">
+    </label>
+    <input type="submit" value="삽입">
+</form>
+</body>
+</html>

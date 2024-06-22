@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/output.css" rel="stylesheet">
+    <title>칵테일뉴비</title>
+</head>
+<body class="flex items-center justify-center" style="background: #edf2f7;">
+<section class="text-gray-600 body-font" >
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-20">
+            <h1 class="sm:text-4xl text-4xl font-medium title-font mb-20 text-gray-900"><a
+                    class="underline decoration-8 decoration-orange-400">칵테일 뉴비</a></h1>
+            <p class="sm:w-2/3 mx-auto leading-relaxed sm:text-2xl text-lg ">칵테일에 대해서 아무것도 모르겠는 <a
+                    class="text-sky-600 font-extrabold">당신</a><br><br><br class="sm:hidden"> 바텐더의 인싸력을 감당할 자신이 없는 <a
+                    class="text-sky-600 font-extrabold">당신</a><br><br><br class="sm:hidden"> 재밌는
+                칵테일을 찾아다니고 있는 <a class="text-sky-600 font-extrabold">당신</a><br><br><br class="sm:hidden"> 칵테일에 대해 더욱 알고 싶은 <a
+                        class="text-sky-600 font-extrabold">당신</a><br><br><br class="sm:hidden"> 모든 <a
+                        class="text-sky-600 font-bold">당신들</a>을 위한 <a
+                        class="text-sky-600 font-bold">당신들</a>만의 바텐더<br><br><br class="sm:hidden"><a
+                        class="underline decoration-4 decoration-orange-400">칵테일 뉴비</a></p>
+        </div>
+        <div class="sm:hidden flex justify-center align-middle">
+            <button class="fixed bottom-4
+                       bg-gray-800 text-white rounded-full
+                       transition duration-300 hover:bg-gray-700
+                       hover:text-gray-200 rotate-180">
+                <img src=
+                             "https://media.geeksforgeeks.org/wp-content/uploads/20240227155250/up.png"
+                     class="w-8 h-8 rounded-full bg-gray-100" alt="">
+            </button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <div class="flex flex-wrap -m-4 text-center">
+            <button class="p-4 md:w-1/4 sm:w-1/2 w-full" id="recommend-button">
+                <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                    <img src="/images/cocktail-svgrepo.svg" class="text-indigo-500 w-12 h-12 mb-3 inline-block" alt="">
+                    <h2 class="title-font font-medium text-3xl text-gray-900"><a
+                            class="overline decoration-4 decoration-orange-400">추천</a></h2>
+                    <p class="leading-relaxed">당신만을 위한<br>칵테일 추천</p>
+                </div>
+            </button>
+            <button class="p-4 md:w-1/4 sm:w-1/2 w-full" id="search-button">
+                <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                    <img src="/images/search-svgrepo-com.svg" class="text-indigo-500 w-12 h-12 mb-3 inline-block" alt="">
+                    <h2 class="title-font font-medium text-3xl text-gray-900"><a
+                            class="overline decoration-4 decoration-orange-400">검색</a></h2>
+                    <p class="leading-relaxed">모든 칵테일들을<br>한꺼번에</p>
+                </div>
+            </button>
+            <button class="p-4 md:w-1/4 sm:w-1/2 w-full" id="chat-button">
+                <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                    <img src="/images/barman-svgrepo-com.svg" class="text-indigo-500 w-12 h-12 mb-3 inline-block" alt="">
+                    <h2 class="title-font font-medium text-3xl text-gray-900"><a
+                            class="overline decoration-4 decoration-orange-400">AI 바텐더</a></h2>
+                    <p class="leading-relaxed" >당신만을 위한<br>바텐더 챗봇</p>
+                </div>
+            </button>
+            <button class="p-4 md:w-1/4 sm:w-1/2 w-full" id="map-button">
+                <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                    <img src="/images/map-pointer-svgrepo-com.svg" class="text-indigo-500 w-12 h-12 mb-3 inline-block" alt="">
+                    <h2 class="title-font font-medium text-3xl text-gray-900"><a
+                            class="overline decoration-4 decoration-orange-400">근처 바</a></h2>
+                    <p class="leading-relaxed">바는 어딜 가도 있습니다</p>
+                </div>
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    let recommend = document.getElementById("recommend-button");
+    let search = document.getElementById("search-button");
+    let chat = document.getElementById("chat-button");
+    let mapButton = document.getElementById("map-button");
+
+    recommend.addEventListener("click", () => {
+        location.href = "/recommend";
+    });
+    search.addEventListener("click", () => {
+        location.href = "/search";
+    });
+    chat.addEventListener("click", () => {
+        location.href = "/chat";
+    });
+    mapButton.addEventListener("click", () => {
+        location.href = "/map";
+    });
+</script>
+</html>

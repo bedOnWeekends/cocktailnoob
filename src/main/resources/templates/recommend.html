@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/output.css" rel="stylesheet">
+    <title>칵테일뉴비</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* 수평 스크롤바를 숨김 */
+            box-sizing: border-box;
+            background: #edf2f7;
+        }
+
+        .container {
+            background: #edf2f7;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide-out {
+            animation: slideOut 0.5s forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .absolute-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box; /* 박스 모델 충돌 방지 */
+        }
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.slim.js"
+            integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+            crossorigin="anonymous">
+    </script>
+</head>
+<body >
+<div class="container flex items-center justify-center">
+    <div id="volumeDiv" class="absolute-fill flex flex-col items-center justify-center">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-3xl text-gray-900 font-bold"><a class="underline decoration-4 decoration-orange-400">도수</a>를
+                골라주세요</h1>
+        </div>
+        <br>
+        <br>
+        <div class="max-w-3xl mx-auto w-1/2 h-1/6">
+            <select id="volumeSelect"
+                    class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-500 block w-full p-2.5 font-bold underline decoration-4 decoration-orange-400">
+                <option selected>1~10</option>
+                <option value="11">11~20</option>
+                <option value="21">21~30</option>
+                <option value="over">그 이상</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <button id="volumeBtn" class="btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform">
+            <span class="relative">다음</span>
+        </button>
+    </div>
+    <div id="tasteDiv" class="absolute-fill flex flex-col items-center justify-center hidden">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-3xl text-gray-900 font-bold"><a class="underline decoration-4 decoration-orange-400">맛</a>을
+                골라주세요</h1>
+        </div>
+        <br>
+        <br>
+        <div class="max-w-3xl mx-auto w-1/2 h-1/6">
+            <select id="tasteSelect"
+                    class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-500 block w-full p-2.5 font-bold underline decoration-4 decoration-orange-400">
+                <option value="sour" selected>새콤</option>
+                <option value="sweet">달콤</option>
+                <option value="bitter">씁쓸</option>
+                <option value="fresh">깔끔</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <button id="tasteBtn" class="btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform">
+            <span class="relative">다음</span>
+        </button>
+    </div>
+    <div id="glassDiv" class="absolute-fill flex flex-col items-center justify-center hidden">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-3xl text-gray-900 font-bold"><a class="underline decoration-4 decoration-orange-400">유형</a>을
+                골라주세요</h1>
+        </div>
+        <br>
+        <br>
+        <div class="max-w-3xl mx-auto w-1/2 h-1/6">
+            <select id="glassSelect"
+                    class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-500 block w-full p-2.5 font-bold underline decoration-4 decoration-orange-400">
+                <option value="sour" selected>롱드링크</option>
+                <option value="sweet">숏드링크</option>
+                <option value="bitter">샷</option>
+                <option value="other">그 이외</option>
+            </select>
+        </div>
+        <br>
+        <br>
+        <button id="glassBtn" class="btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform">
+            <span class="relative">결과확인</span>
+        </button>
+    </div>
+</div>
+<script>
+    document.getElementById('volumeBtn').addEventListener('click', function() {
+        var volumeDiv = document.getElementById('volumeDiv');
+        var tasteDiv = document.getElementById('tasteDiv');
+
+        volumeDiv.classList.add('slide-out');
+        volumeDiv.addEventListener('animationend', function() {
+            volumeDiv.classList.add('hidden');
+            tasteDiv.classList.remove('hidden');
+            tasteDiv.classList.add('slide-in');
+        }, { once: true });
+    });
+    document.getElementById('tasteBtn').addEventListener('click', function() {
+        var tasteDiv = document.getElementById('tasteDiv');
+        var glassDiv = document.getElementById('glassDiv');
+
+        tasteDiv.classList.remove('slide-in')
+        tasteDiv.classList.add('slide-out');
+        tasteDiv.addEventListener('animationend', function() {
+            tasteDiv.classList.add('hidden');
+            glassDiv.classList.remove('hidden');
+            glassDiv.classList.add('slide-in');
+        }, { once: true });
+    });
+
+    document.getElementById('glassBtn').addEventListener('click', function () {
+        let selectedVolume = document.getElementById('volumeSelect').value;
+        let selectedTaste = document.getElementById('tasteSelect').value;
+        let selectedGlass = document.getElementById('glassSelect').value;
+        $.ajax({
+            url: '/recommend',
+            type: 'POST',
+            data: {
+                volume: selectedVolume,
+                taste: selectedTaste,
+                glass: selectedGlass
+            },
+            success: function (data) {
+
+            }
+        });
+    });
+</script>
+</body>
+</html>
