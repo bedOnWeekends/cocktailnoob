@@ -66,16 +66,21 @@
             height: 100%;
             box-sizing: border-box; /* 박스 모델 충돌 방지 */
         }
+
+
     </style>
     <script
-            src="https://code.jquery.com/jquery-3.7.1.slim.js"
-            integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
             crossorigin="anonymous">
     </script>
 </head>
 <body >
+<header class="bg-white p-4 text-gray-700">
+    <h1 class="lg:text-2xl md:text-5xl font-semibold underline decoration-4 decoration-orange-400">추천</h1>
+</header>
 <div class="container flex items-center justify-center">
-    <div id="volumeDiv" class="absolute-fill flex flex-col items-center justify-center">
+    <div id="alcoholDiv" class="absolute-fill flex flex-col items-center justify-center">
         <div class="max-w-2xl mx-auto">
             <h1 class="text-3xl text-gray-900 font-bold"><a class="underline decoration-4 decoration-orange-400">도수</a>를
                 골라주세요</h1>
@@ -83,9 +88,9 @@
         <br>
         <br>
         <div class="max-w-3xl mx-auto w-1/2 h-1/6">
-            <select id="volumeSelect"
+            <select id="alcoholSelect"
                     class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-500 block w-full p-2.5 font-bold underline decoration-4 decoration-orange-400">
-                <option selected>1~10</option>
+                <option value="1" selected>1~10</option>
                 <option value="11">11~20</option>
                 <option value="21">21~30</option>
                 <option value="over">그 이상</option>
@@ -93,7 +98,7 @@
         </div>
         <br>
         <br>
-        <button id="volumeBtn" class="btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform">
+        <button id="alcoholBtn" class="btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform">
             <span class="relative">다음</span>
         </button>
     </div>
@@ -129,9 +134,9 @@
         <div class="max-w-3xl mx-auto w-1/2 h-1/6">
             <select id="glassSelect"
                     class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-400 focus:border-orange-500 block w-full p-2.5 font-bold underline decoration-4 decoration-orange-400">
-                <option value="sour" selected>롱드링크</option>
-                <option value="sweet">숏드링크</option>
-                <option value="bitter">샷</option>
+                <option value="longDrink" selected>롱드링크</option>
+                <option value="shortDrink">숏드링크</option>
+                <option value="shot">샷</option>
                 <option value="other">그 이외</option>
             </select>
         </div>
@@ -141,15 +146,18 @@
             <span class="relative">결과확인</span>
         </button>
     </div>
+    <div id="resultDiv" class="absolute-fill flex flex-col items-center justify-center hidden">
+
+    </div>
 </div>
 <script>
-    document.getElementById('volumeBtn').addEventListener('click', function() {
-        var volumeDiv = document.getElementById('volumeDiv');
+    document.getElementById('alcoholBtn').addEventListener('click', function() {
+        var alcoholDiv = document.getElementById('alcoholDiv');
         var tasteDiv = document.getElementById('tasteDiv');
 
-        volumeDiv.classList.add('slide-out');
-        volumeDiv.addEventListener('animationend', function() {
-            volumeDiv.classList.add('hidden');
+        alcoholDiv.classList.add('slide-out');
+        alcoholDiv.addEventListener('animationend', function() {
+            alcoholDiv.classList.add('hidden');
             tasteDiv.classList.remove('hidden');
             tasteDiv.classList.add('slide-in');
         }, { once: true });
@@ -168,19 +176,61 @@
     });
 
     document.getElementById('glassBtn').addEventListener('click', function () {
-        let selectedVolume = document.getElementById('volumeSelect').value;
+        console.log('glassBtn clicked');
+        let selectedAlcohol = document.getElementById('alcoholSelect').value;
         let selectedTaste = document.getElementById('tasteSelect').value;
         let selectedGlass = document.getElementById('glassSelect').value;
         $.ajax({
-            url: '/recommend',
-            type: 'POST',
+            url: '/cocktails',
+            type: 'GET',
             data: {
-                volume: selectedVolume,
+                alcohol: selectedAlcohol,
                 taste: selectedTaste,
                 glass: selectedGlass
             },
             success: function (data) {
+                console.log(data);
+                const glassDiv = document.getElementById('glassDiv');
+                const resultDiv = document.getElementById('resultDiv');
 
+                glassDiv.classList.remove('slide-in');
+                glassDiv.classList.add('slide-out');
+                glassDiv.addEventListener('animationend', function () {
+                    glassDiv.classList.add('hidden');
+
+                    resultDiv.innerHTML =
+                        "<h2 class='text-2xl text-gray-900 font-bold'>제 추천은....</h2>"+
+                        "<br>" +
+                        "<h1 class='text-3xl text-gray-900 font-bold'><a class='underline decoration-4 decoration-orange-400'>" + data.name + "</a></h1>" +
+                        "<br>" +
+                        "<img id='cocktail-image' src='" + data.image + "' alt='/images/no-cocktail.svg' class='sm:w-1/3 w-1/2 rounded-2xl'>" +
+                        "<span class='text-sm text-gray-900 font-bold'><a class='underline decoration-4 decoration-orange-400'>이미지를 클릭하세요!</a></span>" +
+                        "<br>" +
+                        "<br>" +
+                        "<a href='/recommend' class='btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform text-center'>" + "<span class='relative'>다시하기</span>" + "</a> ";
+                    resultDiv.classList.remove('hidden');
+                    resultDiv.classList.add('slide-in');
+
+                    const cocktailImage = document.getElementById('cocktail-image');
+                    cocktailImage.addEventListener('click', function() {
+                        location.href = '/cocktail-info/' + data.id;
+                    });
+                }, {once: true});
+            },
+            error: function (request, status, error) {
+                console.log('code: ' + request.status + '\n' + 'message: ' + request.responseText + '\n' + 'error: ' + error);
+                const resultDiv = document.getElementById('resultDiv');
+                const glassDiv = document.getElementById('glassDiv');
+
+                glassDiv.classList.remove('slide-in');
+                glassDiv.classList.add('slide-out');
+                glassDiv.addEventListener('animationend', function () {
+                    glassDiv.classList.add('hidden');
+                    resultDiv.innerHTML = "<h1 class='text-3xl text-gray-900 font-bold'><a class='underline decoration-4 decoration-orange-400'>추천 결과가 없습니다.</a></h1>" +
+                        "<br>" + "<img src='/images/no-cocktail.svg' alt='cocktail' class='sm:w-1/6 w-1/4 rounded-2xl'>" + "<br>" + "<br>" + "<a href='/recommend' class='btn overflow-hidden relative w-64 bg-orange-400 text-white py-4 px-4 rounded-xl font-bold uppercase -- before:block before:absolute before:h-full before:w-full before:bg-sky-400 before:left-0 before:top-0 before:-translate-y-full hover:before:translate-y-0 before:transition-transform text-center'>" + "<span class='relative'>다시하기</span>" + "</a> ";
+                    resultDiv.classList.remove('hidden');
+                    resultDiv.classList.add('slide-in');
+                }, {once: true});
             }
         });
     });

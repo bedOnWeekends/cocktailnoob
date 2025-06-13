@@ -4,7 +4,155 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<link href="/css/output.css" rel="stylesheet">
+<script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+</script>
+<style>
+    .max-w-half {
+        max-width: 50%;
+    }
 
+
+    @media (min-width: 768px) {
+        #chat-screen {
+            height: calc(100vh - 400px);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        #chat-screen {
+            height: calc(100vh - 100px);
+        }
+    }
+</style>
+<body class="bg-gray-100">
+<!-- component -->
+<div class="flex h-screen overflow-hidden touch-none">
+    <!-- Main Chat Area -->
+    <div class="flex-1">
+        <!-- Chat Header -->
+        <header class="bg-white p-4 text-gray-700">
+            <h1 class="lg:text-2xl md:text-5xl font-semibold underline decoration-4 decoration-orange-400">AI 바텐더</h1>
+        </header>
+
+        <!-- Chat Messages -->
+        <div id="chat-screen" class="h-screen overflow-y-auto p-4 pb-36">
+
+
+        </div>
+
+        <!-- Chat Input -->
+        <footer class="bg-white border-t border-gray-300 p-4 fixed bottom-0 w-full">
+            <div class="flex items-center">
+                <input id="msg-input" type="text" placeholder="입력하세요..."
+                       class="w-full p-2 md:h-56 lg:h-12 md:text-5xl lg:text-lg rounded-md border border-gray-400 focus:outline-none focus:border-blue-500">
+                <button id="send-btn" class="bg-orange-400 lg:w-1/12 md:w-1/6 text-white md:text-4xl lg:text-lg px-4 lg:py-2 md:py-28 rounded-md ml-2">전송</button>
+            </div>
+        </footer>
+    </div>
+
+</div>
 </body>
+<script>
+    let password = prompt("비밀번호를 입력하세요.");
+
+    function createMessageElement(text, type) {
+        const messageDiv = document.createElement('div');
+        const textDiv = document.createElement('div');
+        const textP = document.createElement('p');
+        const imageDiv = document.createElement('div');
+        const imageRrc = document.createElement('img');
+        textP.innerText = text;
+
+        if (type === 'outgoing') {
+            messageDiv.className = "flex justify-end mb-4 cursor-pointer";
+
+            textDiv.className = "flex max-w-half bg-indigo-500 text-white rounded-lg p-3 gap-3";
+            textP.className = "md:text-4xl lg:text-lg"
+            imageDiv.className = "lg:w-9 md:w-24 lg:h-9 md:h-24 rounded-full flex items-center justify-center ml-2";
+            imageRrc.className = "lg:w-8 md:w-24 lg:h-8 md:h-24 rounded-full";
+            imageRrc.alt = "My Avatar";
+            imageRrc.src = "/images/user-alt-1-svgrepo-com.svg";
+
+            textDiv.appendChild(textP);
+
+            imageDiv.appendChild(imageRrc);
+
+            messageDiv.appendChild(textDiv);
+            messageDiv.appendChild(imageDiv);
+        } else if (type === 'incoming') {
+            messageDiv.className = "flex mb-4 cursor-pointer";
+
+            textDiv.className = "flex max-w-half bg-orange-400 rounded-lg p-3 gap-3";
+            textP.className = "text-white md:text-4xl lg:text-lg";
+
+            imageDiv.className = "lg:w-9 md:w-24 lg:h-9 md:h-24 rounded-full flex items-center justify-center mr-2";
+            imageRrc.className = "lg:w-9 md:w-24 lg:h-9 md:h-24 rounded-full";
+            imageRrc.alt = "User Avatar";
+            imageRrc.src = "/images/barman-svgrepo-com.svg";
+
+            textDiv.appendChild(textP);
+
+            imageDiv.appendChild(imageRrc);
+
+            messageDiv.appendChild(imageDiv);
+            messageDiv.appendChild(textDiv);
+        }
+
+        return messageDiv;
+    }
+
+    // 메시지 표시 함수
+    function displayMessage(text, type) {
+        const chatScreen = document.getElementById("chat-screen");
+        const messageElement = createMessageElement(text, type);
+        chatScreen.appendChild(messageElement);
+    }
+    const sendBtn = document.getElementById("send-btn");
+    const input = document.getElementById("msg-input");
+
+    function sendFunc() {
+        console.log("clicked");
+        let inputText = input.value;
+
+        if (inputText === "" || inputText === null){
+            console.log("empty");
+            return;
+        }
+
+        displayMessage(inputText, "outgoing");
+        input.value = "";
+
+        $.ajax({
+           url: 'chat-gpt',
+            type: 'GET',
+            data: {
+              request: inputText,
+                password: password
+            },
+            success: function (answer) {
+                displayMessage(answer, "incoming");
+                window.scrollTo(0, document.body.scrollHeight);
+            },
+            error: function () {
+                
+            }
+        });
+    }
+
+    sendBtn.addEventListener('click', sendFunc);
+    input.addEventListener('keyup', (key) => {
+        if (key.code === "Enter"){
+            sendFunc();
+
+        }
+    });
+
+
+
+
+</script>
 </html>
